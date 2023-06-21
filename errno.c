@@ -16,7 +16,7 @@ bool find_err_by_name(char* query) {
     bool found = false;
     size_t len = strlen(query);
 
-    for (int i = 0; i < 255; i++) {
+    for (int i = 0; i <= 255; i++) {
         const char* errname = strerrorname_np(i);
         if (errname == NULL) continue;
 
