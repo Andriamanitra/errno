@@ -39,13 +39,13 @@ int main(int argc, char** argv) {
     }
     // wrong usage (someone tried to pass in a flag, or gave too many args)
     else if (argc > 2 || argv[1][0] == '-') {
-        printf("Usage: errno [ERRORID | ERRORNAME]\n");
+        fprintf(stderr, "Usage: errno [ERRORID | ERRORNAME]\n");
         return 1;
     }
     // when query starts with e or E, find errors with names matching the query
     else if ((argv[1][0] | 32) == 'e') {
         if (!find_err_by_name(argv[1])) {
-            fprintf(stderr, "Error with name '%s' not found\n", argv[1]);
+            fprintf(stderr, "\033[31mError with name '%s' not found\033[0m\n", argv[1]);
             return 1;
         }
         return 0;
@@ -54,11 +54,11 @@ int main(int argc, char** argv) {
     else {
         int id;
         if (sscanf(argv[1], "%d", &id) != 1) {
-            fprintf(stderr, "'%s' is not a valid error id or name\n", argv[1]);
+            fprintf(stderr, "\033[31m'%s' is not a valid error id or name\033[0m\n", argv[1]);
             return 1;
         }
         if (!strerrorname_np(id)) {
-            fprintf(stderr, "Error with id %d not found\n", id);
+            fprintf(stderr, "\033[31mError with id %d not found\033[0m\n", id);
             return 1;
         }
         print_errno_info(id);
